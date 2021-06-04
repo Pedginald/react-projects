@@ -6,7 +6,7 @@ const url = 'https://course-api.com/react-tabs-project';
 function App() {
   const [loading, setLoading] = useState(true);
   const [jobs, setJobs] = useState([]);
-  const [index, setIndex] = useState(0);
+  const [value, setValue] = useState(0);
 
   const fetchJobs = async () => {
     const response = await fetch(url);
@@ -27,7 +27,7 @@ function App() {
     )
   }
 
-  const { id, order, title, dates, duties, company } = jobs[index];
+  const { title, dates, duties, company } = jobs[value];
 
   return (
     <section className='section'>
@@ -37,9 +37,13 @@ function App() {
       </div>
       <div className='jobs-center'>
         <div className='btn-container'>
-          {jobs.map(job => {
+          {jobs.map((job, index) => {
             return (
-              <button className='job-btn' onClick={() => setIndex(jobs.indexOf(job))}>
+              <button 
+                key={job.id} 
+                className={`job-btn ${index === value && 'active-btn'}`}
+                onClick={() => setValue(index)}
+              >
                 {job.company}
               </button>
             )
@@ -49,9 +53,9 @@ function App() {
           <h3>{title}</h3>
           <h4>{company}</h4>
           <p className='job-date'>{dates}</p>
-          {duties.map((duty, ind) => {
+          {duties.map((duty, index) => {
             return (
-              <div key={ind} className='job-desc'>
+              <div key={index} className='job-desc'>
                 <FaAngleDoubleRight className='job-icon'/>
                 <p>{duty}</p>
               </div>
