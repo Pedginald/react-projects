@@ -18,9 +18,10 @@ function App() {
   }, [index, people]);
 
   useEffect(() => {
-    setInterval(() => {
-      setIndex(index + 1)
+    let slider = setInterval(() => {
+      setIndex(index + 1);
     }, 3000);
+    return () => clearInterval(slider);
   }, [index]);
 
   return (
@@ -51,6 +52,7 @@ function App() {
               <h4>{name}</h4>
               <h4 className='title'>{title}</h4>
               <p className='text'>{quote}</p>
+              <FaQuoteRight className='icon'/>
             </article>
           )
         })}
